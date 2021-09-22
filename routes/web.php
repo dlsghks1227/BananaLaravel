@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +16,12 @@ use App\Http\Controllers\AjaxController;
 */
 
 Route::get('/', function() {
-    return view('welcome');
 });
 
-Route::get('home', function() {
-    return view('ajax');
-});
-
-Route::get('test', [AjaxController::class, 'index']);
 Route::resource('todo', AjaxController::class);
+
+Route::name('test.')->prefix('test')->group(function() {
+    Route::get('/', [TestController::class, 'index'])->name('index');
+    Route::post('/', [TestController::class, 'store'])->name('store'); 
+    Route::get('/create', [TestController::class, 'create'])->name('create');
+});
