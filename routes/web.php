@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\TestController;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use App\Http\Controllers\TestController;
 */
 
 Route::get('/', function() {
+    return Redirect(route('test.store'));
 });
 
 Route::resource('todo', AjaxController::class);
