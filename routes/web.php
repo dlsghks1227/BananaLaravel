@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-<<<<<<< Updated upstream
-use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\TestController;
-use Illuminate\Support\Facades\Redirect;
-=======
->>>>>>> Stashed changes
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +20,6 @@ use Illuminate\Support\Facades\Redirect;
 |
 */
 
-<<<<<<< Updated upstream
-Route::get('/', function() {
-    return Redirect(route('test.store'));
-=======
 Route::get('/', function (Request $request) {
     // echo "${Request::ip2long($request->ip())}";
     $address = ip2long($request->ip());
@@ -44,7 +34,6 @@ Route::get('/', function (Request $request) {
     }
     $data['players'] = $other_players;
     return view('app')->with('players_data', $data);
->>>>>>> Stashed changes
 });
 
 Route::post('increase', function (Request $request) {
