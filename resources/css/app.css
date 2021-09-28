@@ -8,3 +8,32 @@
 * {
     font-family: 'GowunDodum-Regular';
 }
+
+.custom-button {
+    -webkit-font-smoothing: antialiased;    /* 부드러운 글꼴 */
+    position: absolute; 
+    font-size: 1.5em; 
+    color: white;
+    left: 50%;
+    width: 70%;
+    padding: 7px 20px;
+    border-radius: 10px; 
+    border: 5px solid transparent;
+    text-shadow: -1px -1px 1px rgba(0,0,0,0.8);
+    border-bottom-color: rgba(0,0,0,0.35);
+    background: hsla(260, 100%, 50%, 1);
+    cursor: pointer;
+    outline: 0 !important;
+    transform: translate(-50%, 0);
+    transition: background 0.4s, border 0.2s, margin 0.2s; }
+
+    .custom-button:hover {
+		background: hsla(220, 100%, 60%, 1);
+		margin-top: -1px;
+
+		animation: none;
+	}
+	.custom-button:active {
+		border-bottom-width: 0;
+		margin-top: 5px;
+	}

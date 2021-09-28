@@ -9,9 +9,8 @@
                     <h1>{{ this.counter }}</h1>
                 </div>
             </div>
-            <div class="d-grid gap-2 mb-4">
-                <button type="button" class="btn btn-primary btn-lg" v-on:click="increase">Click me</button>
-            </div>
+            <button type="button" class="custom-button" v-on:click="increase">Click me</button>
+            <div class="p-5"></div>
             <table class="table">
                 <thead>
                     <tr>
@@ -32,7 +31,23 @@
 
 <script>
 export default {
-    
+    props: {
+        playersData: {
+            type: Object,
+            required: true
+        }
+    },
+    methods: {
+        increase: function(event)
+        {
+            axios.post('http://125.134.138.184/increase')
+                .then(function(response) {
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+    },
     mounted() {
         Echo.channel('laravel_database_connected').listen('ConnectMessage', e => {
             Vue.set(this.otherPlayers, e.player.address, e.player.counter);
@@ -50,27 +65,10 @@ export default {
             });
         });
     },
-    props: {
-        playersData: {
-            type: Object,
-            required: true
-        }
-    },
     data() {
         return {
             counter: this.playersData.counter,
             otherPlayers: {}
-        }
-    },
-    methods: {
-        increase: function(event)
-        {
-            axios.post('http://125.134.138.184/increase')
-                .then(function(response) {
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
         }
     }
 }
