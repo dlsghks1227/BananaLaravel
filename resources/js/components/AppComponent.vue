@@ -9,8 +9,8 @@
                     <h1>{{ this.counter }}</h1>
                 </div>
             </div>
-            <div class="d-grid gap-2">
-                <button type="button" class="btn btn-primary" v-on:click="increase">Click me</button>
+            <div class="d-grid gap-2 mb-4">
+                <button type="button" class="btn btn-primary btn-lg" v-on:click="increase">Click me</button>
             </div>
             <table class="table">
                 <thead>
