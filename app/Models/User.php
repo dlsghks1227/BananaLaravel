@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * 대량 할당 가능한 속성
      *
      * @var string[]
      */
@@ -24,7 +24,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * 배열로 출력 시 제외되어야 하는 속성
      *
      * @var array
      */
@@ -34,7 +34,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * PHP 네이티브 타입으로 형변환되어야 하는 속성
      *
      * @var array
      */

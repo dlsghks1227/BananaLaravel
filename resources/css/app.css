@@ -5,8 +5,27 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'SF_IceLemon';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_IceLemon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MaplestoryOTFLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
-    font-family: 'GowunDodum-Regular';
+    font-family: 'MaplestoryOTFLight';
+    touch-action: manipulation;
+}
+
+.custom-canvas {
+    display: block;
 }
 
 .custom-button {
@@ -15,14 +34,13 @@
     font-size: 1.5em; 
     color: white;
     left: 50%;
-    width: 70%;
+    width: 50%;
     padding: 7px 20px;
     border-radius: 10px; 
     border: 5px solid transparent;
     text-shadow: -1px -1px 1px rgba(0,0,0,0.8);
     border-bottom-color: rgba(0,0,0,0.35);
     background: hsla(260, 100%, 50%, 1);
-    cursor: pointer;
     outline: 0 !important;
     transform: translate(-50%, 0);
     transition: background 0.4s, border 0.2s, margin 0.2s; }

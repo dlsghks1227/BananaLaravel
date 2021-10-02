@@ -9,7 +9,7 @@
                     <h1>{{ this.counter }}</h1>
                 </div>
             </div>
-            <button type="button" class="custom-button" v-on:click="increase">Click me</button>
+            <button ref="customButton" type="button" class="container custom-button" v-on:click="increase">Click me</button>
             <div class="p-5"></div>
             <table class="table">
                 <thead>
@@ -30,6 +30,11 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Vue from 'vue';
+import { addChannel } from '@/utils/broadcast';
+import { counterIncrease } from '@/api/index';
+
 export default {
     props: {
         playersData: {
@@ -38,38 +43,52 @@ export default {
         }
     },
     methods: {
-        increase: function(event)
+        // https://stackoverflow.com/questions/44072750/how-to-send-basic-auth-with-axios
+        increase: async function()
         {
-            axios.post('http://125.134.138.184/increase')
-                .then(function(response) {
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
+            // try {
+            //     // 비즈니스 로직
+            //     const userData = {
+            //         username: this.username,
+            //         password: this.password,
+            //         nickname: this.nickname
+            //     }
+            //     const { data } = await registerUser(userData);
+            // } catch (error) {
+            //      // 에러 핸들링
+            //     console.log(error.message);
+            // } finally {
+
+            // }
+            try {
+                const { data } = await counterIncrease();
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     },
-    mounted() {
-        Echo.channel('laravel_database_connected').listen('ConnectMessage', e => {
+    data: function() {
+        return {
+            counter: this.playersData.counter,
+            otherPlayers: {}
+        }
+    },
+    mounted: function() {
+        addChannel('connected', 'ConnectMessage', e => {
             Vue.set(this.otherPlayers, e.player.address, e.player.counter);
             Echo.channel('laravel_database_increase_' + e.player.address).listen('IncreaseMessage', e => {
                 this.otherPlayers[e.player.address] += 1;
             });
         });
-        Echo.channel('laravel_database_increase_' + this.playersData.address).listen('IncreaseMessage', e => {
+        addChannel('increase_' + this.playersData.address, 'IncreaseMessage', e => {
             this.counter += 1;
         });
         this.playersData.players.forEach(element => {
             Vue.set(this.otherPlayers, element.address, element.counter);
-            Echo.channel('laravel_database_increase_' + element.address).listen('IncreaseMessage', e => {
+            addChannel('increase_' + element.address, 'IncreaseMessage', e => {
                 this.otherPlayers[element.address] += 1;
             });
         });
-    },
-    data() {
-        return {
-            counter: this.playersData.counter,
-            otherPlayers: {}
-        }
     }
 }
 </script>

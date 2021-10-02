@@ -3,6 +3,8 @@
 use App\Events\ConnectMessage;
 use App\Events\IncreaseMessage;
 use App\Events\SendMessage;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 use App\Models\Players;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
@@ -28,12 +30,12 @@ Route::get('/', function (Request $request) {
         'address' => $address
     ]);
     //$other_players = DB::select("SELECT address, counter FROM players WHERE address NOT IN (?)", [$address]);
-    $other_players = Players::select(['address', 'counter'])->get();
+    $other_players = Players::select(['address', 'counter'])->orderBy('counter')->get();
     if ($hasData == false) {
         broadcast(new ConnectMessage($data));
     }
     $data['players'] = $other_players;
-    return view('app')->with('players_data', $data);
+    return view('home')->with('players_data', $data);
 });
 
 Route::post('increase', function (Request $request) {
@@ -49,4 +51,14 @@ Route::post('increase', function (Request $request) {
     {
         return ['response' => 'fail'];
     }
+});
+
+// 인증된 사용자만 접근 가능
+Route::middleware('auth')->group(function () {
+    Route::get('admin', [AdminController::class, 'index']);
+});
+
+// 인증되지 않은 사용자만 접근 가능
+Route::middleware('guest')->group(function () {
+    Route::get('login', [LoginController::class, 'index'])->name('login');
 });
