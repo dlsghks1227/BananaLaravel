@@ -2197,13 +2197,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    playersData: {
+    users: {
       type: Object,
       required: true
     }
@@ -2250,26 +2252,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      counter: this.playersData.counter,
-      otherPlayers: {}
+      counter: this.users.counter,
+      otherUsers: {}
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('connected', 'ConnectMessage', function (e) {
-      vue__WEBPACK_IMPORTED_MODULE_4__["default"].set(_this.otherPlayers, e.player.address, e.player.counter);
-      Echo.channel('laravel_database_increase_' + e.player.address).listen('IncreaseMessage', function (e) {
-        _this.otherPlayers[e.player.address] += 1;
+      vue__WEBPACK_IMPORTED_MODULE_4__["default"].set(_this.otherUsers, e.other.username, e.player.counter);
+      Echo.channel('laravel_database_increase_' + e.player.username).listen('IncreaseMessage', function (e) {
+        _this.otherUsers[e.player.username] += 1;
       });
     });
-    (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('increase_' + this.playersData.address, 'IncreaseMessage', function (e) {
+    (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('increase_' + this.users.username, 'IncreaseMessage', function (e) {
       _this.counter += 1;
     });
-    this.playersData.players.forEach(function (element) {
-      vue__WEBPACK_IMPORTED_MODULE_4__["default"].set(_this.otherPlayers, element.address, element.counter);
-      (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('increase_' + element.address, 'IncreaseMessage', function (e) {
-        _this.otherPlayers[element.address] += 1;
+    this.users.other.forEach(function (element) {
+      vue__WEBPACK_IMPORTED_MODULE_4__["default"].set(_this.otherUsers, element.username, element.counter);
+      (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('increase_' + element.username, 'IncreaseMessage', function (e) {
+        _this.otherUsers[element.username] += 1;
       });
     });
   }
@@ -27521,6 +27523,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/login.css":
+/*!*********************************!*\
+  !*** ./resources/css/login.css ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/ms/index.js":
 /*!**********************************!*\
   !*** ./node_modules/ms/index.js ***!
@@ -31223,8 +31238,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.otherPlayers, function(counter, address) {
-            return _c("tr", { key: address }, [
+          _vm._l(_vm.otherUsers, function(counter, address, index) {
+            return _c("tr", { key: index }, [
+              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(address))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(counter))])
@@ -31251,7 +31268,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("ID")]),
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Username")]),
         _vm._v(" "),
         _c("th", [_vm._v("Counter")])
       ])
@@ -43656,6 +43675,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
+/******/ 			"css/login": 0,
 /******/ 			"css/app": 0
 /******/ 		};
 /******/ 		
@@ -43706,8 +43726,9 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/login","css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/login","css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/login","css/app"], () => (__webpack_require__("./resources/css/login.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Players;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,16 +16,16 @@ class IncreaseMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
-    public $player;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Players $player)
+    public function __construct(User $user)
     {
-        $this->player = $player;
+        $this->user = $user;
     }
 
     /**
@@ -34,6 +35,6 @@ class IncreaseMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('increase_'.$this->player->address);
+        return new Channel('increase_'.$this->user->username);
     }
 }

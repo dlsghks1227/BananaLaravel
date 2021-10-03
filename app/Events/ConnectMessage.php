@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Players;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,16 +17,16 @@ class ConnectMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $player;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Players $player)
+    public function __construct(User $user)
     {
-        $this->player =  $player;
+        $this->user =  $user;
     }
 
     /**
@@ -38,10 +39,10 @@ class ConnectMessage implements ShouldBroadcastNow
         return new Channel('connected');
     }
 
-    // public function broadcastWith()
-    // {
-    //     return [
-    //         'player' => $this->player
-    //     ];
-    // }
+    public function broadcastWith()
+    {
+        return [
+            'user' => $this->user
+        ];
+    }
 }

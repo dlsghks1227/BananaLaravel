@@ -15,8 +15,11 @@ class CreatePlayersTable extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->id();
+            $table->string('nickname')->unique();
+            $table->string('password');
             $table->integer('address')->unsigned();
             $table->bigInteger('counter')->unsigned();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

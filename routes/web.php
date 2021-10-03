@@ -4,9 +4,12 @@ use App\Events\ConnectMessage;
 use App\Events\IncreaseMessage;
 use App\Events\SendMessage;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Models\Players;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -22,43 +25,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (Request $request) {
-    // echo "${Request::ip2long($request->ip())}";
-    $address = ip2long($request->ip());
-    $hasData = Players::where('address', $address)->first();
-    $data = Players::select(['address', 'counter'])->firstOrCreate([
-        'address' => $address
-    ]);
-    //$other_players = DB::select("SELECT address, counter FROM players WHERE address NOT IN (?)", [$address]);
-    $other_players = Players::select(['address', 'counter'])->orderBy('counter')->get();
-    if ($hasData == false) {
-        broadcast(new ConnectMessage($data));
-    }
-    $data['players'] = $other_players;
-    return view('home')->with('players_data', $data);
-});
-
-Route::post('increase', function (Request $request) {
-    $player = Players::where('address', ip2long($request->ip()))->first();
-    if ($player)
-    {
-        $player->increment('counter');
-
-        broadcast(new IncreaseMessage($player));
-        return ['response' => 'ok'];
-    }
-    else
-    {
-        return ['response' => 'fail'];
-    }
-});
-
 // 인증된 사용자만 접근 가능
 Route::middleware('auth')->group(function () {
-    Route::get('admin', [AdminController::class, 'index']);
+    Route::get('/', function (Request $request) {
+        $user = Auth::user();
+        $user['other'] = User::orderBy('counter', 'desc')->get();
+        return view('home')->with('users', $user);
+    });
+
+    Route::post('increase', function (Request $request) {
+        if (Auth::check())
+        {
+            $user = Auth::user();
+            $user->increment('counter');
+            broadcast(new IncreaseMessage($user));
+            return ['response' => 'ok'];
+        }
+        else
+        {
+            return ['response' => 'fail'];
+        }
+    });
+
 });
+Route::get('admin', [AdminController::class, 'index']);
 
 // 인증되지 않은 사용자만 접근 가능
-Route::middleware('guest')->group(function () {
-    Route::get('login', [LoginController::class, 'index'])->name('login');
-});
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('login', [AuthController::class, 'signin'])->name('signin');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');

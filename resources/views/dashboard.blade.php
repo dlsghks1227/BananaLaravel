@@ -3,6 +3,6 @@
 @section('title', 'dashboard')
 
 @section('content')
-<div class="container">
-</div>
+<body>
+</body>
 @endsection

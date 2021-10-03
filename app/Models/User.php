@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -18,9 +19,10 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'username',
+        'address',
+        'counter',
+        'password'
     ];
 
     /**
@@ -38,7 +40,22 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
+
+    // 기본값 설정
+    protected $attributes = [
+        'counter' => 0
     ];
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
+    }
+
+    public function setAddressAttribute($address)
+    {
+        $this->attributes['address'] = ip2long($address);
+    }
 }

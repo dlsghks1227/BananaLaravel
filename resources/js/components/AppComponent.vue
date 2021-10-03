@@ -14,12 +14,14 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
+                        <th>Username</th>
                         <th>Counter</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(counter, address) in otherPlayers" :key="address">
+                    <tr v-for="(counter, address, index) in otherUsers" :key="index">
+                        <td>{{ index + 1 }}</td>
                         <td>{{ address }}</td>
                         <td>{{ counter }}</td>
                     </tr>
@@ -37,7 +39,7 @@ import { counterIncrease } from '@/api/index';
 
 export default {
     props: {
-        playersData: {
+        users: {
             type: Object,
             required: true
         }
@@ -69,24 +71,24 @@ export default {
     },
     data: function() {
         return {
-            counter: this.playersData.counter,
-            otherPlayers: {}
+            counter: this.users.counter,
+            otherUsers: {}
         }
     },
     mounted: function() {
         addChannel('connected', 'ConnectMessage', e => {
-            Vue.set(this.otherPlayers, e.player.address, e.player.counter);
-            Echo.channel('laravel_database_increase_' + e.player.address).listen('IncreaseMessage', e => {
-                this.otherPlayers[e.player.address] += 1;
+            Vue.set(this.otherUsers, e.user.username, e.user.counter);
+            Echo.channel('laravel_database_increase_' + e.user.username).listen('IncreaseMessage', e => {
+                this.otherUsers[e.user.username] += 1;
             });
         });
-        addChannel('increase_' + this.playersData.address, 'IncreaseMessage', e => {
+        addChannel('increase_' + this.users.username, 'IncreaseMessage', e => {
             this.counter += 1;
         });
-        this.playersData.players.forEach(element => {
-            Vue.set(this.otherPlayers, element.address, element.counter);
-            addChannel('increase_' + element.address, 'IncreaseMessage', e => {
-                this.otherPlayers[element.address] += 1;
+        this.users.other.forEach(element => {
+            Vue.set(this.otherUsers, element.username, element.counter);
+            addChannel('increase_' + element.username, 'IncreaseMessage', e => {
+                this.otherUsers[element.username] += 1;
             });
         });
     }
