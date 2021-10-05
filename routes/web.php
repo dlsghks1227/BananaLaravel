@@ -48,7 +48,9 @@ Route::middleware('auth')->group(function () {
     });
 
 });
-Route::get('admin', [AdminController::class, 'index']);
+Route::get('admin', function() {
+    return view('temp');
+});
 
 // 인증되지 않은 사용자만 접근 가능
 Route::get('login', [AuthController::class, 'index'])->name('login');

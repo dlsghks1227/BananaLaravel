@@ -9,7 +9,7 @@
 
         <link rel="stylesheet" type="text/css" href={{ URL::asset('css/app.css'); }} >
     </head>
-    <body class="container mt-5">
+    <body>
         <div id="app">
             <app-component :users="{{ $users }}"></app-component>
         </div>

@@ -1,4 +1,9 @@
-export const addChannel = function(clannelName, className, event)
+export const addChannel = function(channelName, className, event)
 {
-    Echo.channel('laravel_database_' + clannelName).listen(className, event);
+    Echo.channel('laravel_database_' + channelName).listen(className, event);
+}
+
+export const addIncreaseChannel = function(username, event)
+{
+    addChannel('increase_' + username, 'IncreaseMessage', event);
 }

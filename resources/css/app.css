@@ -22,6 +22,11 @@
 * {
     font-family: 'MaplestoryOTFLight';
     touch-action: manipulation;
+    margin: 0;
+}
+
+html, body, main, #app {
+    height: 100%;
 }
 
 .custom-canvas {
@@ -49,9 +54,56 @@
 		background: hsla(220, 100%, 60%, 1);
 		margin-top: -1px;
 
-		animation: none;
-	}
+		animation: none; }
 	.custom-button:active {
 		border-bottom-width: 0;
-		margin-top: 5px;
-	}
+		margin-top: 5px; }
+
+.rank-table {
+    height: 60%;
+}
+
+.message-container {
+    display: flex; 
+    overflow-y: hidden; 
+    width: 100%; }
+
+    .message-container .title {
+        display: flex;
+        flex: none;
+        overflow-y: hidden; 
+        flex-basis: 25%;
+        background-color: #1e3b79;
+    }
+
+    .message-container .message-area {
+        display: flex;
+        flex-basis: 75%;
+        background-color: #f2f8ff; }
+
+        .message-container .message-area .message-list {
+            display: flex;
+            flex: none;
+            flex-basis: 33.3%;
+            flex-direction: column;
+            overflow: hidden; }
+
+            .message-container .message-area .message-list .message {
+                margin: 20px;
+                padding: 10px;
+                border-radius: 10px;
+                flex: none;
+                background-color: white;
+            }
+
+            
+        
+        
+
+    .message-container .message-list .message {
+        overflow-y: hidden;
+    }
+
+.message-list-move {
+    transition: transform 0.8s ease;
+}

@@ -2155,11 +2155,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var _utils_broadcast__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/utils/broadcast */ "./resources/js/utils/broadcast.js");
-/* harmony import */ var _api_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/api/index */ "./resources/js/api/index.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _utils_broadcast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/utils/broadcast */ "./resources/js/utils/broadcast.js");
+/* harmony import */ var _api_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/api/index */ "./resources/js/api/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2199,7 +2197,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2222,7 +2254,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return (0,_api_index__WEBPACK_IMPORTED_MODULE_3__.counterIncrease)();
+                return (0,_api_index__WEBPACK_IMPORTED_MODULE_2__.counterIncrease)();
 
               case 3:
                 _yield$counterIncreas = _context.sent;
@@ -2248,32 +2280,107 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return increase;
+    }(),
+    up: function () {
+      var _up = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var refMessage;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                refMessage = this.$refs.messageList;
+                this.position -= 100;
+                refMessage.style.transform = "translate(0px, " + this.position + "px)"; // // this.items = _.orderBy(this.items, 'value', 'asc');
+                // this.items = _.chain(this.items).map((val, key) => {
+                //     return {name: key, count: val}
+                // }).orderBy('count', 'asc').keyBy('name').mapValues('count').value()
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function up() {
+        return _up.apply(this, arguments);
+      }
+
+      return up;
+    }(),
+    down: function () {
+      var _down = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var refMessage;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                refMessage = this.$refs.messageList;
+                console.log(refMessage);
+                this.position += 100;
+                refMessage.style.transform = "translate(0px, " + this.position + "px)"; // // his.items = _.orderBy(this.items, 'value', 'desc');  
+                // this.items = _.chain(this.items).map((val, key) => {
+                //     return {name: key, count: val}
+                // }).orderBy('count', 'desc').keyBy('name').mapValues('count').value()
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function down() {
+        return _down.apply(this, arguments);
+      }
+
+      return down;
     }()
   },
   data: function data() {
     return {
       counter: this.users.counter,
-      otherUsers: {}
+      otherUsers: {},
+      position: 0
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('connected', 'ConnectMessage', function (e) {
-      vue__WEBPACK_IMPORTED_MODULE_4__["default"].set(_this.otherUsers, e.other.username, e.player.counter);
-      Echo.channel('laravel_database_increase_' + e.player.username).listen('IncreaseMessage', function (e) {
-        _this.otherUsers[e.player.username] += 1;
+    (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_1__.addChannel)('connected', 'ConnectMessage', function (element) {
+      vue__WEBPACK_IMPORTED_MODULE_3__["default"].set(_this.otherUsers, element.user.username, element.user.counter);
+      (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_1__.addChannel)('increase_' + element.user.username, 'IncreaseMessage', function (e) {
+        _this.otherUsers[element.user.username] += 1;
+        _this.otherUsers = _.chain(_this.otherUsers).map(function (val, key) {
+          return {
+            name: key,
+            count: val
+          };
+        }).orderBy('count', 'desc').keyBy('name').mapValues('count').value();
       });
     });
-    (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('increase_' + this.users.username, 'IncreaseMessage', function (e) {
+    (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_1__.addChannel)('increase_' + this.users.username, 'IncreaseMessage', function (e) {
       _this.counter += 1;
     });
     this.users.other.forEach(function (element) {
-      vue__WEBPACK_IMPORTED_MODULE_4__["default"].set(_this.otherUsers, element.username, element.counter);
-      (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_2__.addChannel)('increase_' + element.username, 'IncreaseMessage', function (e) {
+      vue__WEBPACK_IMPORTED_MODULE_3__["default"].set(_this.otherUsers, element.username, element.counter);
+      (0,_utils_broadcast__WEBPACK_IMPORTED_MODULE_1__.addChannel)('increase_' + element.username, 'IncreaseMessage', function (e) {
         _this.otherUsers[element.username] += 1;
+        _this.otherUsers = _.chain(_this.otherUsers).map(function (val, key) {
+          return {
+            name: key,
+            count: val
+          };
+        }).orderBy('count', 'desc').keyBy('name').mapValues('count').value();
       });
     });
+    var refMessage = this.$refs.messageList;
+    refMessage.style.transition = "1s"; // var position = 0;
+    // setInterval(function() {
+    //     this.position += 100;
+    // }, 10000);
   }
 });
 
@@ -2374,10 +2481,14 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addChannel": () => (/* binding */ addChannel)
+/* harmony export */   "addChannel": () => (/* binding */ addChannel),
+/* harmony export */   "addIncreaseChannel": () => (/* binding */ addIncreaseChannel)
 /* harmony export */ });
-var addChannel = function addChannel(clannelName, className, event) {
-  Echo.channel('laravel_database_' + clannelName).listen(className, event);
+var addChannel = function addChannel(channelName, className, event) {
+  Echo.channel('laravel_database_' + channelName).listen(className, event);
+};
+var addIncreaseChannel = function addIncreaseChannel(username, event) {
+  addChannel('increase_' + username, 'IncreaseMessage', event);
 };
 
 /***/ }),
@@ -27536,6 +27647,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/temp.css":
+/*!********************************!*\
+  !*** ./resources/css/temp.css ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/ms/index.js":
 /*!**********************************!*\
   !*** ./node_modules/ms/index.js ***!
@@ -31210,46 +31334,53 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "d-flex justify-content-center mb-4" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-shrink-0" }, [
-          _c("h1", [_vm._v(_vm._s(this.counter))])
-        ])
-      ]),
+  return _c("main", { staticClass: "message-container" }, [
+    _c("div", { staticClass: "title" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn",
+          attrs: { type: "button" },
+          on: { click: _vm.up }
+        },
+        [_vm._v("up")]
+      ),
       _vm._v(" "),
       _c(
         "button",
         {
-          ref: "customButton",
-          staticClass: "container custom-button",
+          staticClass: "btn",
           attrs: { type: "button" },
-          on: { click: _vm.increase }
+          on: { click: _vm.down }
         },
-        [_vm._v("Click me")]
+        [_vm._v("down")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "message-area" }, [
+      _c(
+        "div",
+        { ref: "messageList", staticClass: "message-list" },
+        [
+          _c(
+            "transition-group",
+            { attrs: { name: "message-list", tag: "div" } },
+            _vm._l(_vm.otherUsers, function(counter, address, index) {
+              return _c("div", { key: address, staticClass: "message" }, [
+                _c("div", [_vm._v(_vm._s(address))]),
+                _vm._v(" "),
+                _c("div", [_vm._v(_vm._s(_vm.otherUsers[address]))])
+              ])
+            }),
+            0
+          )
+        ],
+        1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "p-5" }),
+      _vm._m(0),
       _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.otherUsers, function(counter, address, index) {
-            return _c("tr", { key: index }, [
-              _c("td", [_vm._v(_vm._s(index + 1))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(address))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(counter))])
-            ])
-          }),
-          0
-        )
-      ])
+      _vm._m(1)
     ])
   ])
 }
@@ -31258,21 +31389,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-2 w-100" }, [
-      _c("h1", [_vm._v("클릭 클릭")])
+    return _c("div", { staticClass: "message-list" }, [
+      _c("div", { staticClass: "message" }, [
+        _vm._v("\n                Test\n            ")
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Username")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Counter")])
+    return _c("div", { staticClass: "message-list" }, [
+      _c("div", { staticClass: "message" }, [
+        _vm._v("\n                Test\n            ")
       ])
     ])
   }
@@ -43675,6 +43804,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
+/******/ 			"css/temp": 0,
 /******/ 			"css/login": 0,
 /******/ 			"css/app": 0
 /******/ 		};
@@ -43726,9 +43856,10 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/login","css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/login","css/app"], () => (__webpack_require__("./resources/css/app.css")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/login","css/app"], () => (__webpack_require__("./resources/css/login.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/temp","css/login","css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/temp","css/login","css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/temp","css/login","css/app"], () => (__webpack_require__("./resources/css/login.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/temp","css/login","css/app"], () => (__webpack_require__("./resources/css/temp.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
